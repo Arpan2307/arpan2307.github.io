@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Speed First RL for 3D Reconstruction and NBV: a BS thesis project by Arpan Jain combining reinforcement learning, next-best-view planning, and 2D Gaussian Splatting."
+    >
+    <meta name="author" content="Arpan Jain">
+    <meta property="og:title" content="Speed First RL for 3D Reconstruction and NBV">
+    <meta
+      property="og:description"
+      content="A speed-first active perception framework for efficient 3D reconstruction and next-best-view planning."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="results_quality_summary_plots.png">
+    <title>Speed First RL for 3D Reconstruction and NBV</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="Speed First RL home">
+        <span class="brand-mark">SFRL</span>
+        <span>Speed First RL</span>
+      </a>
+      <nav class="nav-links" aria-label="Project sections">
+        <a href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#visualizations">Visualizations</a>
+        <a href="#results">Results</a>
+        <a href="#resources">Resources</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="project-title">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-inner">
+          <p class="eyebrow">BS Thesis Project | Active 3D Vision | NBV Planning</p>
+          <h1 id="project-title">
+            <span>Speed First RL</span>
+            <span>for 3D</span>
+            <span>Reconstruction</span>
+            <span>and NBV</span>
+          </h1>
+          <p class="hero-copy">
+            A reinforcement learning framework for selecting informative views quickly,
+            reducing redundant observations, and feeding efficient reconstructions through
+            a 2D Gaussian Splatting backend.
+          </p>
+          <div class="author-line">
+            <strong>Arpan Jain</strong>
+            <span>Department of Data Science and Engineering, IISER Bhopal</span>
+            <span>Supervisor: Dr. Sundaram Muthu</span>
+          </div>
+          <div class="hero-actions" aria-label="Project links">
+            <a class="action-link primary" href="22056_Arpan_Report.pdf" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 2h8l4 4v16H6V2Zm7 1.7V7h3.3L13 3.7ZM8 11h8v1.6H8V11Zm0 3.4h8V16H8v-1.6Zm0 3.4h5.5v1.6H8v-1.6Z"/>
+              </svg>
+              Report
+            </a>
+            <a class="action-link" href="https://github.com/Arpan2307" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 .8a11.2 11.2 0 0 0-3.5 21.8c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17.7 4 18.7 4.3 18.7 4.3c.6 1.6.2 2.9.1 3.2.8.9 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.2.9 2.4v3c0 .3.2.7.8.6A11.2 11.2 0 0 0 12 .8Z"/>
+              </svg>
+              Code
+            </a>
+            <a class="action-link muted" href="#resources">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3 1.8 20.7h20.4L12 3Zm0 4.1 6.3 11H5.7l6.3-11Zm-.9 3.6h1.8v4.6h-1.8v-4.6Zm0 5.8h1.8v1.8h-1.8v-1.8Z"/>
+              </svg>
+              Data
+            </a>
+            <a class="action-link muted" href="#resources">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 4h16v12H4V4Zm2 2v8h12V6H6Zm4.4 12h3.2l.4 2h3v2H7v-2h3l.4-2Z"/>
+              </svg>
+              Slides
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="abstract" class="section section-light">
+        <div class="section-inner narrow">
+          <p class="section-kicker">Abstract</p>
+          <h2>Fast active perception for reconstruction quality under a compute budget.</h2>
+          <p>
+            Recent advances in Neural Radiance Fields and Gaussian Splatting have improved
+            reconstruction quality, but efficient data acquisition remains a major bottleneck.
+            This project integrates Deep Reinforcement Learning with 2D Gaussian Splatting to
+            jointly optimize keyframe selection and Next-Best-View planning.
+          </p>
+          <p>
+            The agent is formulated as a closed-loop Markov Decision Process that balances
+            geometric information gain, novelty, coverage improvement, travel cost, and
+            computational overhead. The result is a speed-first reconstruction pipeline that
+            keeps useful observations while reducing redundant sensing.
+          </p>
+        </div>
+      </section>
+
+      <section id="method" class="section section-white">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-kicker">Method</p>
+            <h2>RL selects the next useful observation before reconstruction spends time on it.</h2>
+          </div>
+          <div class="method-grid" aria-label="Method overview">
+            <article class="method-step">
+              <span class="step-number">01</span>
+              <h3>State</h3>
+              <p>Compact coverage, camera motion, and online load features summarize the partial scene.</p>
+            </article>
+            <article class="method-step">
+              <span class="step-number">02</span>
+              <h3>Policy</h3>
+              <p>A reinforcement learning agent chooses whether a view is worth keeping or where to move next.</p>
+            </article>
+            <article class="method-step">
+              <span class="step-number">03</span>
+              <h3>Reward</h3>
+              <p>Coverage and novelty are rewarded while travel, compute, and zero-gain actions are penalized.</p>
+            </article>
+            <article class="method-step">
+              <span class="step-number">04</span>
+              <h3>Backend</h3>
+              <p>Selected frames are passed to a 2D Gaussian Splatting pipeline for efficient reconstruction.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="visualizations" class="section section-ink">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-kicker">Visualizations</p>
+            <h2>Embed rollout videos, reconstruction flythroughs, and selected-view demos.</h2>
+          </div>
+          <div class="video-grid">
+            <figure class="video-panel">
+              <video controls preload="metadata" poster="results_expB_backpack_selected_views.png">
+                <source src="assets/videos/nbv-policy-rollout.mp4" type="video/mp4">
+              </video>
+              <figcaption>
+                <strong>NBV policy rollout</strong>
+                <span>Closed-loop view selection for informative scene coverage.</span>
+              </figcaption>
+            </figure>
+            <figure class="video-panel">
+              <video controls preload="metadata" poster="results_expB_keyboard_selected_views.png">
+                <source src="assets/videos/reconstruction-flythrough.mp4" type="video/mp4">
+              </video>
+              <figcaption>
+                <strong>2DGS reconstruction flythrough</strong>
+                <span>Reconstruction playback using the selected observation set.</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="results" class="section section-light">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-kicker">Results</p>
+            <h2>Quality, coverage, time, and memory trade-offs.</h2>
+          </div>
+          <div class="featured-figure">
+            <img src="results_quality_summary_plots.png" alt="Aggregate quality comparison plots for the thesis experiments.">
+          </div>
+          <div class="results-grid">
+            <figure>
+              <img src="results_efficiency_summary_plots.png" alt="Aggregate efficiency comparison plots.">
+              <figcaption>Efficiency summary across experiments.</figcaption>
+            </figure>
+            <figure>
+              <img src="results_object_geometric_plots.png" alt="Object-wise geometric comparison plots.">
+              <figcaption>Object-wise geometric comparison.</figcaption>
+            </figure>
+            <figure>
+              <img src="results_time_vs_psnr.png" alt="Time versus PSNR trade-off plot.">
+              <figcaption>Runtime versus PSNR.</figcaption>
+            </figure>
+            <figure>
+              <img src="results_time_vs_coverage.png" alt="Time versus coverage trade-off plot.">
+              <figcaption>Runtime versus coverage.</figcaption>
+            </figure>
+            <figure>
+              <img src="results_memory_vs_ssim.png" alt="Memory versus SSIM trade-off plot.">
+              <figcaption>Memory versus SSIM.</figcaption>
+            </figure>
+            <figure>
+              <img src="results_memory_vs_coverage.png" alt="Memory versus coverage trade-off plot.">
+              <figcaption>Memory versus coverage.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="selected-views" class="section section-white">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-kicker">Selected Views</p>
+            <h2>Representative frames retained by the speed-first policy.</h2>
+          </div>
+          <div class="comparison-grid">
+            <figure>
+              <img src="results_expB_backpack_selected_views.png" alt="Selected views for backpack object in Experiment B.">
+              <figcaption>Backpack sequence.</figcaption>
+            </figure>
+            <figure>
+              <img src="results_expB_keyboard_selected_views.png" alt="Selected views for keyboard object in Experiment B.">
+              <figcaption>Keyboard sequence.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="resources" class="section section-light">
+        <div class="section-inner narrow">
+          <p class="section-kicker">Resources</p>
+          <h2>Report, code, sample data, and presentation links.</h2>
+          <div class="resource-list">
+            <a href="22056_Arpan_Report.pdf" target="_blank" rel="noreferrer">
+              <span>Report PDF</span>
+              <small>22056_Arpan_Report.pdf</small>
+            </a>
+            <a href="https://github.com/Arpan2307" target="_blank" rel="noreferrer">
+              <span>GitHub Repository</span>
+              <small>Project implementation and experiments.</small>
+            </a>
+            <a href="#resources" aria-disabled="true">
+              <span>Sample Data</span>
+              <small>Sample dataset release.</small>
+            </a>
+            <a href="#resources" aria-disabled="true">
+              <span>Final Presentation</span>
+              <small>Final thesis slides.</small>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Speed First RL for 3D Reconstruction and NBV | Arpan Jain | IISER Bhopal | April 2026</p>
+    </footer>
+  </body>
+</html>
